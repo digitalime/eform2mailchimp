@@ -16,7 +16,7 @@ function eForm2mailchimp( &$fields )
       
 	// Bring needed resources into scope
         global $modx;
-		include('assets/snippets/mailchimp/MailChimp.php');
+		include('assets/snippets/eform2mailchimp/MailChimp.php');
 	$listid = $modx->db->escape($fields[listid]);
 
 	$apikey = "APIKEY HERE"; //From https://admin.mailchimp.com/account/api/
@@ -28,10 +28,10 @@ function eForm2mailchimp( &$fields )
 		$organisation = $modx->db->escape($fields[organisation]);
 		$tel = $modx->db->escape($fields[tel]);
 	
-			//Let's call the Maichimp API and send the stuff
+		//Let's call the Maichimp API and send the stuff
 			
-$MailChimp = new \Drewm\MailChimp($apikey);
-$result = $MailChimp->call('lists/subscribe', array(
+		$MailChimp = new \Drewm\MailChimp($apikey);
+		$result = $MailChimp->call('lists/subscribe', array(
 				'id'                => $listid, //SET THIS AS A HIDDEN FIELD IN YOUR FORM, 
                 'email'             => array('email'=>$email),
                 'merge_vars'        => array('FNAME'=>$firstname, 'LNAME'=>$lastname, 'ORGA'=>$organisation, 'TEL'=>$tel ),
@@ -40,8 +40,7 @@ $result = $MailChimp->call('lists/subscribe', array(
                 'replace_interests' => false,
                 'send_welcome'      => false,
             ));
-	//print_r($result);
-	//echo "listid id ".$listid;
+
 }
 
 return false;
